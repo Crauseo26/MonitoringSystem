@@ -18,10 +18,12 @@ This is the core observability library for .NET 8.0+ applications.
 
 ### Middleware
 - `CorrelationIdMiddleware` - Manages correlation IDs for HTTP requests
+- `GlobalErrorHandlingMiddleware` - Catches unhandled exceptions and returns a standardized error response.
 
 ### Extensions
 - `ObservabilityServiceCollectionExtensions` - DI container configuration
 - `ObservabilityApplicationBuilderExtensions` - Middleware pipeline configuration
+- `GlobalErrorHandlingExtensions` - Provides the `UseGlobalErrorHandling()` extension method.
 
 ## Usage
 
@@ -96,22 +98,32 @@ public class MyCorrelationIdProvider : ICorrelationIdProvider
 
 // Register in DI
 services.AddSingleton<ICorrelationIdProvider, MyCorrelationIdProvider>();
+
+## Global Error Handling
+
+This library includes a middleware for global exception handling. It catches any unhandled exceptions, logs them using the configured structured logger, and returns a standardized `500 Internal Server Error` JSON response.
+
+### Enabling Global Error Handling
+
+To enable it, register the middleware in your application's request pipeline. It should be placed early in the pipeline to ensure it can catch exceptions from subsequent middlewares.
+
+**Example in `Program.cs`:**
+
+```csharp
+var app = builder.Build();
+
+// It is recommended to place the error handler early in the pipeline.
+app.UseGlobalErrorHandling();
+
+// ... other middlewares
 ```
 
-## Building
+When an exception is caught, the middleware will log the full exception details and return a response similar to this:
 
-```bash
-dotnet build
-```
-
-## Testing
-
-```bash
-dotnet test
-```
-
-## Packaging
-
-```bash
-dotnet pack -c Release
+```json
+{
+  "StatusCode": 500,
+  "Message": "An internal server error has occurred.",
+  "Detailed": "The actual exception message."
+}
 ```
