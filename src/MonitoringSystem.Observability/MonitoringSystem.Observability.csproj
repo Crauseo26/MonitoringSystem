@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    
+    <!-- Package Information -->
+    <PackageId>MonitoringSystem.Observability</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>MonitoringSystem</Authors>
+    <Company>MonitoringSystem</Company>
+    <Product>MonitoringSystem.Observability</Product>
+    <Description>A reusable .NET 8.0+ library for implementing structured logging and observability in ASP.NET Core applications. Features include structured JSON logging, correlation ID tracking, sensitive data masking, and extensible architecture.</Description>
+    <PackageTags>logging;observability;serilog;structured-logging;correlation-id;monitoring;aspnetcore</PackageTags>
+    <PackageProjectUrl>https://github.com/Crauseo26/MonitoringSystem</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Crauseo26/MonitoringSystem</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>Initial release with structured logging, correlation ID tracking, and sensitive data masking.</PackageReleaseNotes>
+    
+    <!-- Documentation -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
+    <PackageReference Include="Serilog.Enrichers.Environment" Version="3.0.1" />
+    <PackageReference Include="Serilog.Enrichers.Thread" Version="4.0.0" />
+  </ItemGroup>
+
+</Project>
